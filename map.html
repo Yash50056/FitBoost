@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Location Tracking</title>
+  <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px;
+    }
+
+    #map {
+      height: 100vh; /* Adjust the map height as needed */
+      width: 100%;
+    }
+
+    #map-container {
+      position: relative;
+    }
+
+    #map-controls {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      z-index: 1000;
+    }
+    #reset-button{
+        border: none;
+        padding: 10px 15px 10px 15px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: #333 1px solid;
+        color: darkcyan;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Location Tracking
+  </header>
+
+  <div id="map-container">
+    <div id="map"></div>
+    <div id="map-controls">
+      <button onclick="resetMap()" id="reset-button">Reset Map</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([0, 0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var startMarker = L.marker([0, 0]).addTo(map).bindPopup('Start Position');
+    var endMarker = L.marker([0, 0]).addTo(map).bindPopup('End Position');
+    var polyline = L.polyline([], { color: 'black' }).addTo(map);
+
+    // Load polyline data from local storage
+    var storedPolyline = localStorage.getItem('polyline');
+    if (storedPolyline) {
+      polyline.setLatLngs(JSON.parse(storedPolyline));
+    }
+
+    function updateMarkersAndPolyline(latitude, longitude) {
+      var currentPosition = L.latLng(latitude, longitude);
+
+      // Update the position of the markers
+      startMarker.setLatLng(currentPosition).update();
+      endMarker.setLatLng(currentPosition).update();
+
+      // Update and redraw the polyline with the new position
+      var latlngs = polyline.getLatLngs();
+      latlngs.push(currentPosition);
+      polyline.setLatLngs(latlngs);
+
+      // Save polyline data to local storage
+      localStorage.setItem('polyline', JSON.stringify(latlngs));
+
+      // Center the map on the current position
+      map.setView(currentPosition, map.getZoom());
+    }
+
+    function onLocationUpdate(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      // Update markers and polyline with new coordinates
+      updateMarkersAndPolyline(latitude, longitude);
+    }
+
+    function onLocationError(error) {
+      console.error('Error getting location:', error.message);
+    }
+
+    function resetMap() {
+      // Clear stored data and reset map
+      localStorage.removeItem('polyline');
+      polyline.setLatLngs([]);
+      map.setView([0, 0], 13);
+    }
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.watchPosition(onLocationUpdate, onLocationError, {
+        enableHighAccuracy: true
+      });
+    } else {
+      alert('Geolocation is not supported by your browser');
+    }
+  </script>
+</body>
+</html>

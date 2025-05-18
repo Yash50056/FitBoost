@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps chart</title>
+    <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the reference to the historyList element from the opener window
+            var historyList = window.opener.document.getElementById("historyList");
+
+            // Initialize an empty array to store the sum of steps
+            var sumStepDataPoints = [];
+
+            // Initialize a Chart.js line chart for steps
+            var ctx = document.getElementById('lineChart').getContext('2d');
+            var stepChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Total Steps',
+                        borderColor: 'rgb(75, 192, 192)',
+                        data: sumStepDataPoints,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left'
+                        }
+                    }
+                }
+            });
+
+            function refreshPage() {
+                // Get the content of historyList
+                var historyContent = historyList.textContent;
+
+                // Extract steps by searching for the keyword "Steps"
+                var steps = historyContent.match(/Steps: (\d+)/g);
+
+                // Sum the extracted steps
+                var totalSteps = 0;
+                if (steps) {
+                    steps.forEach(function (step) {
+                        totalSteps += parseInt(step.match(/\d+/)[0], 10);
+                    });
+                }
+
+                // Update the array of sum data points for steps
+                sumStepDataPoints.push(totalSteps);
+
+                // Limit the number of data points for better visualization
+                if (sumStepDataPoints.length > 10) {
+                    sumStepDataPoints.shift();
+                }
+
+                // Update the chart data and labels for steps
+                stepChart.data.labels = Array.from({ length: sumStepDataPoints.length }, (_, i) => i + 1);
+                stepChart.data.datasets[0].data = sumStepDataPoints;
+
+                // Update the chart for steps
+                stepChart.update();
+
+                // Display the sum of steps in the displayHistory div
+                document.getElementById("displayHistory").textContent = "Total Steps: " + totalSteps;
+            }
+
+            // Refresh the page every 5 seconds (5000 milliseconds)
+            setInterval(refreshPage, 5000);
+        });
+    </script>
+    <style>
+        .stepChartContainer {
+            width: 50%;
+        }
+        .main-navbar{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div id="displayHistory">
+            <!-- The extracted sum of steps will be displayed here -->
+        </div>
+        <div class="stepChartContainer">
+            <canvas id="lineChart" width="400" height="200"></canvas>
+        </div>
+    </section>
+</body>
+</html>

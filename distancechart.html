@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the reference to the historyList element from the opener window
+            var historyList = window.opener.document.getElementById("historyList");
+
+            // Initialize an empty array to store the sum of distances
+            var sumDataPoints = [];
+
+            // Initialize a Chart.js line chart
+            var ctx = document.getElementById('lineChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Sum of Distances',
+                        borderColor: 'rgb(75, 192, 192)',
+                        data: sumDataPoints,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left'
+                        }
+                    }
+                }
+            });
+
+            function refreshPage() {
+                // Get the content of historyList
+                var historyContent = historyList.textContent;
+
+                // Extract distances by searching for the keyword "Distance"
+                var distances = historyContent.match(/Distance: (\d+)/g);
+
+                // Sum the extracted distances
+                var sumOfDistances = 0;
+                if (distances) {
+                    distances.forEach(function (distance) {
+                        sumOfDistances += parseInt(distance.match(/\d+/)[0], 10);
+                    });
+                }
+
+                // Update the array of sum data points
+                sumDataPoints.push(sumOfDistances);
+
+                // Limit the number of data points for better visualization
+                if (sumDataPoints.length > 10) {
+                    sumDataPoints.shift();
+                }
+
+                // Update the chart data and labels
+                chart.data.labels = Array.from({ length: sumDataPoints.length }, (_, i) => i + 1);
+                chart.data.datasets[0].data = sumDataPoints;
+
+                // Update the chart
+                chart.update();
+
+                // Display the sum in the displayHistory div
+                document.getElementById("displayHistory").textContent = "Sum of Distances: " + sumOfDistances;
+            }
+
+            // Refresh the page every second (1000 milliseconds)
+            setInterval(refreshPage, 5000);
+        });
+    </script>
+    <style>
+        .distancechart{
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="displayHistory">
+    </div>
+    <div class="distancechart">
+        <canvas id="lineChart" width="400" height="200"></canvas>
+    </div>
+</body>
+</html>

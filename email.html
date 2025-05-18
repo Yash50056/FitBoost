@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Sending Example</title>
+  <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+       emailjs.init("jgKO25QPBvTJl_sZJ");
+    })();
+ </script> 
+</head>
+<body>
+
+  <h2>Send Email</h2>
+
+  <form id="emailForm">
+    <label for="recipientEmail">Recipient Email:</label>
+    <input type="email" id="recipientEmail" required>
+    <button type="button" onclick="sendEmail()">Send Email</button>
+  </form>
+
+  <script type="text/javascript">
+    // Function to send email
+    function sendEmail() {
+      const recipientEmail = document.getElementById('recipientEmail').value;
+
+      // Use your Email.js template and parameters
+      const templateParams = {
+        to_email: recipientEmail,
+        // Add more parameters as needed
+      };
+
+      // Send email
+      emailjs.send("service_o8wujur", "template_5koodqc", templateParams)
+        .then(function(response) {
+          console.log('Email sent successfully:', response);
+        }, function(error) {
+          console.error('Email failed to send:', error);
+        });
+    }
+  </script>
+
+</body>
+</html>

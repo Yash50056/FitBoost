@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap');
+  </style>
+    
+<!--font awesome-->
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"/>
+
+<!--Google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="chatbot.js" defer></script>
+<script src="tracker.js" type="module"></script>
+</head>
+
+<body>
+  <div id="bg-wrap">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop offset="0%" stop-color="#008080"></stop>
+          <stop offset="100%" stop-color="rgba(173, 216, 230, 0)"></stop>
+        </radialGradient>
+        <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop offset="0%" stop-color="#FF6F61"></stop>
+          <stop offset="100%" stop-color="rgba(255, 218, 185, 0)"></stop>
+        </radialGradient>
+        <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop offset="0%" stop-color="#FFFFF0"></stop>
+          <stop offset="100%" stop-color="rgba(240, 248, 255, 0)"></stop>
+        </radialGradient>
+      </defs>
+      <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)">
+        <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s"
+          repeatCount="indefinite"></animateTransform>
+      </rect>
+      <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)"
+        transform="rotate(255.072 50 50)">
+        <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s"
+          repeatCount="indefinite"></animateTransform>
+      </rect>
+      <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)"
+        transform="rotate(139.903 50 50)">
+        <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s"
+          repeatCount="indefinite"></animateTransform>
+      </rect>
+    </svg>
+  </div>
+
+
+  <button class="chatbot-toggler">
+    <span class="material-symbols-rounded">mode_comment</span>
+    <span class="material-symbols-outlined">close</span>
+  </button>
+  <div class="chatbot">
+    <header>
+      <h2>Chatbot</h2>
+      <span class="close-btn material-symbols-outlined">close</span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <p>Hi there 👋<br>How can I help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
+    </div>
+  </div>
+  <header id="header" class="header">
+    <nav id="navbar">
+      <div class="main-navbar-box">
+        <div class="first-navarbar-list">
+          <div class="logo-navbar-image">
+            <a href="#" class="modal-trigger" style="text-decoration: none;" data-target="modal4">
+                <img src="images/user.png" alt="error" data-target="modal4" style="padding: 10px;min-width: 70px">
+            </a>
+          </div>
+        </div>
+        <div class="second-navbar-list">
+          <div class="box1">
+            <div class="logo1">
+              <p><span id="points" style="font-size: 18px;">0 points</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="history-container">
+    <div id="overlay">
+      <span class="close-btn" onclick="closePopup()" style="font-size:50px;">&times;</span>
+      <div id="popup-content">
+        <h2>History</h2>
+        <ul id="historyList">
+        </ul>
+      </div>
+    </div>
+    <button onclick="openPopup()" class="aurora-button2"
+      style="margin-right: 12px;font-family:'Times New Roman', Times, serif">History</button>
+    <script src="script.js"></script>
+    <button id="exportButton" class="aurora-button2"
+      style="margin-right: 12px;font-family:'Times New Roman', Times, serif">Export</button>
+  </div>
+  <section id="section" class="section">
+    <div class="main-section-box">
+      <div class="greeting">
+        <span id="greeting-text" style="font-size:28px">Good Morning, <span id="username">User</span></span>
+        <p style="margin: 0px; font-size:14px;padding-top:5px">
+        <div id="lastSyncTime" style="font-size:14px;"></div>
+        </p>
+        <script type="module" src="greeting.js"></script>
+      </div>
+    </div>
+    <div class="scrollable-div" id="clickableDiv">
+      <div class="scrollable-div-para">
+        <p style="padding: 5px;">
+          Welcome to your daily fitness suggestion! Click here to reveal today's tip:
+        </p>
+      </div>
+      <script type="module" src="scrollable-div.js"></script>
+    </div>
+    <div class="bluetooth-container">
+      <div class="bluetooth-container-box1">
+        <button id="connectDevice">Connect to Bluetooth Device</button>
+        <div id="loadingMessage" style="display: none;">
+          <span id="loadingSpinner"></span>
+        </div>
+        <div id="connectionStatus"></div>
+        <script type="module" src="bluetooth.js" defer></script>
+      </div>
+      <div class="bluetooth-container-box2">
+        <img src="images/apple.png" alt="error">
+      </div>
+    </div>
+    <p>Last Updated: <span id="lastUpdated"></span></p>
+    <div class="container" onload="setData()">
+      <!-- Display health metrics -->
+      <div class="circle-container1">
+        <div class="circle1">
+          <div id="steps" class="circle">
+            <p>Steps Taken: <span>0 steps</span></p>
+          </div>
+          <div id="calories" class="circle">
+            <p>Calories Burned: <span>0 kcal</span></p>
+          </div>
+        </div>
+        <div class="circle2">
+          <div id="distance" class="circle">
+            <p>Distance Traveled: <span>0.00 km</span></p>
+          </div>
+          <div id="heartRate" class="circle">
+            <p>Estimated Heart Rate: <span>0 bpm</span></p>
+          </div>
+        </div>
+      </div>
+      <!-- Buttons for tracking control -->
+      <div class="main-button-container">
+        <div class="button-container">
+          <div class="button1">
+            <button id="startButton" style="border-radius: 40px; width: 120px; height: 40px;">Start Tracking</button>
+          </div>
+          <div class="button2">
+            <button id="stopButton" style="border-radius: 40px; width: 120px; height: 40px;">Stop Tracking</button>
+          </div>
+          <div class="button3">
+            <button id="resetButton" style="border-radius: 40px; width: 120px; height: 40px;">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider">
+      <div class="carousel-container">
+        <div class="carousel" id="carousel">
+          <div class="carousel-slide">
+            <img src="images/full-shot-woman-training-with-stats.jpg" alt="Image 1">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/medium-shot-woman-training-with-stats.jpg" alt="Image 2">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/full-shot-woman-training-with-stats (1).jpg" alt="Image 3">
+          </div>
+          <!-- Add more images as needed -->
+        </div>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+      <script type="module" src="slider.js" defer></script>
+    </div>
+    <div class="tracker-data-container">
+      <div class="tracker-data-display-container">
+        <div class="tracker-data-display-steps" style="" onclick="openStepPage()">
+          <p><center>Steps</center></p>
+        </div>
+        <div class="tracker-data-display-distance" onclick="openDistancePage()">
+          <p><center>Distance</center></p>
+        </div>
+        <div class="tracker-data-display-calories" onclick="opencaloriesPage()">
+          <p><center>Calories</center></p>
+        </div>
+        <div class="tracker-data-display-heartrate" onclick="openheartratePage()">
+          <p><center>HeartRate</center></p>
+        </div>
+        <div class="tracker-data-display-heartrate" onclick="openMap()">
+            <p><center>Maps</center></p>
+        </div>
+        <script>
+            function openMap() {
+                window.location.href = 'map.html';
+            }
+        </script>
+      </div>
+      <div class="tracker-data-display-container2">
+        <p>
+          <br><br>
+          Hey FitFam!
+
+          At FitnessFit, we're all about helping you crush your fitness goals, because we know that the journey is just as important as the destination. Whether you're just starting out or you're a seasoned pro, staying consistent is the ultimate key to success.
+          <br><br>
+          For all you amazing software application users out there, here’s a game-changing tip to keep you on track: Schedule your workouts like an unmissable event! Treat your fitness routine with the same importance you give to your business meetings, social plans, or even your favorite TV shows. When you make your workouts a non-negotiable part of your day, you'll find it easier to stay committed and motivated.
+          <br><br>
+💡        Here’s how you can make it work:
+          <br><br>
+            1. Set a specific time: Choose a slot in your day when you're least likely to be interrupted.
+            <br><br>
+            2. Use reminders: Let your app nudge you when it’s time to get moving.
+            <br><br>
+            3. Make it fun: Whether it's a playlist, a challenge, or a reward system—find what keeps you excited.
+            <br><br>
+            4. Track your progress: Seeing your improvements over time will keep you motivated to push further.
+          <br>
+          #FitLife #FitnessFitFame #StayConsistent #OwnYourJourney
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <a href="#" class="modal-trigger" data-target="modal1">\
+      <img src="images/home_6023439.png" alt="Image 1">
+    </a>
+    <a href="#" class="modal-trigger" data-target="modal2">
+      <img src="images/win_9679436.png" alt="Image 2">
+    </a>
+    <a href="#" class="modal-trigger" data-target="modal3">
+      <img src="images/store_9715366.png" alt="Image 3">
+    </a>
+    <a href="#" class="modal-trigger" data-target="modal4">
+      <img src="images/user-profile_9368192.png" alt="Image 4">
+    </a>
+  </footer>
+  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <div class="button-container-contentchanger">
+        <button class="color-button-contentchanger" onclick="showContentContentchanger('New')">New</button>
+        <button class="color-button-contentchanger" onclick="showContentContentchanger('Joined')">Joined</button>
+        <button class="color-button-contentchanger" onclick="showContentContentchanger('Completed')">Completed</button>
+        <button class="color-button-contentchanger" onclick="showContentContentchanger('Features')">Features</button>
+      </div>
+
+      <div class="container-parent-contentchanger">
+        <div class="container-contentchanger" id="container-contentchanger">
+          <div class="content-contentchanger active-contentchanger">
+            <h2>Content 1</h2>
+            <p>This is the content of content 1.</p>
+          </div>
+
+          <div class="content-contentchanger left-contentchanger">
+            <h2>Content 2</h2>
+            <p>This is the content of content 2.</p>
+          </div>
+
+          <div class="content-contentchanger right-contentchanger">
+            <h2>Content 3</h2>
+            <p>This is the content of content 3.</p>
+          </div>
+
+          <div class="content-contentchanger">
+            <h2>Content 4 (Features)</h2>
+            <p>This is the content of content 4 (Features).</p>
+          </div>
+        </div>
+      </div>
+      <script src="contentchanger.js"></script>
+    </div>
+  </div>
+  <div class="modal" id="modal3">
+    <header class="headers">
+        <img src="./images/Fitness-PNG-Images.png" width="60px" alt/>
+  
+        <div class="inputSearch desktop">
+          <form id="searchForm">
+            <input type="text" placeholder="Type to search..." id="searchInput" />
+            <span> <i class="fa-solid fa-search"></i></span>
+          </form>
+        </div>
+        <nav class="desktop">
+          <ul>
+            <li onclick="Search('tech')">Tech</li>
+            <li onclick="Search('food')">Food</li>
+          </ul>
+        </nav>
+  
+        <div class="menuBtn">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+  
+        <div class="mobile hidden">
+          <nav>
+            <ul>
+              <li onclick="Search('tech')">Tech</li>
+              <li onclick="Search('food')">Food</li>
+            </ul>
+          </nav>
+          <div class="inputSearch">
+          <form id="searchFormMobile" id="searchInputMobile">
+            <input type="text" placeholder="Type to search..." />
+            <span> <i class="fa-solid fa-search"></i></span>
+          </div>
+          </form>
+        </div>
+      </header>
+      <main></main>
+      <script src="news.js"></script>
+  </div>
+  <div class="modal" id="modal4">
+
+
+    <div id="bg-wrap">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+            <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+            <stop offset="0%" stop-color="#008080"></stop>
+            <stop offset="100%" stop-color="rgba(173, 216, 230, 0)"></stop>
+          </radialGradient>
+          <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+            <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+            <stop offset="0%" stop-color="#FF6F61"></stop>
+            <stop offset="100%" stop-color="rgba(255, 218, 185, 0)"></stop>
+          </radialGradient>
+          <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+            <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+            <stop offset="0%" stop-color="#FFFFF0"></stop>
+            <stop offset="100%" stop-color="rgba(240, 248, 255, 0)"></stop>
+          </radialGradient>
+        </defs>
+        <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)"
+          transform="rotate(334.41 50 50)">
+          <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
+          <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+          <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s"
+            repeatCount="indefinite"></animateTransform>
+        </rect>
+        <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)"
+          transform="rotate(255.072 50 50)">
+          <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
+          <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
+          <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s"
+            repeatCount="indefinite"></animateTransform>
+        </rect>
+        <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)"
+          transform="rotate(139.903 50 50)">
+          <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+          <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+          <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s"
+            repeatCount="indefinite"></animateTransform>
+        </rect>
+      </svg>
+    </div>
+
+
+
+
+    <div class="modal4-main" id="modal4">
+      <div class="main-info">
+        <div class="info">
+          <div class="logo">
+            <img src="images/user.png" alt="error">
+            <div class="info-img"></div>
+          </div>
+        </div>
+        <div class="individual-info">
+          <div class="individual-info-basic">
+            <div class="info-desc">
+              <p>Name: <span></span></p>
+              <p>Age: <span></span></p>
+              <p>Weight: <span></span></p>
+              <p>Height: <span></span></p>
+              <p>Address: <span></span></p>
+            </div>
+            <div class="info-detail">
+              <p><span id="result-name"></span></p>
+              <p><span id="result-age"></span></p>
+              <p><span id="result-weight"></span></p>
+              <p><span id="result-height"></span></p>
+              <p><span id="result-address"></span></p>
+            </div>
+
+          </div>
+        </div>
+        <div class="indiviual-contact">
+          <div class="info-desc">
+            <p>Mobile Number: <span></span></p>
+            <p>Email ID: <span></span></p>
+          </div>
+          <div class="info-desc">
+            <p> <span id="result-mobile"></span></p>
+            <p><span id="result-email"></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Retrieve user information from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      document.getElementById('result-name').innerText = localStorage.getItem('name') || 'N/A';
+      document.getElementById('result-age').innerText = localStorage.getItem('age') || 'N/A';
+      document.getElementById('result-weight').innerText = localStorage.getItem('weight') || 'N/A';
+      document.getElementById('result-height').innerText = localStorage.getItem('height') || 'N/A';
+      document.getElementById('result-address').innerText = localStorage.getItem('address') || 'N/A';
+      document.getElementById('result-mobile').innerText = localStorage.getItem('mobile') || 'N/A';
+      document.getElementById('result-email').innerText = localStorage.getItem('email') || 'N/A';
+    </script>
+  </div>
+  <script src="distancechart.js"></script>
+  <script src="stepchart.js"></script>
+  <script src="calorieschart.js"></script>
+  <script src="heartratechart.js"></script>
+  <script type="module" src="modal.js"></script>
+  <script type="module" src="darkmode.js"></script>
+</body>
+
+</html>

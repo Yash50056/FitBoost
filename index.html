@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Personal Information Form</title>
+    <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            background-color: #18ef31;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            /* Prevents the gradient overflow */
+        }
+
+        .form-container {
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            margin: 10px 10px;
+            /* Add blur effect to the background */
+        }
+
+        /* Optional: Adjust padding for smaller screens */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                /* Adjust padding for mobile */
+            }
+        }
+
+        .form-container:hover {
+            transform: scale(1.02);
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #4caf50;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            display: none;
+        }
+
+        #result.visible {
+            display: block;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 18px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        /* SVG Styling */
+        #bg-wrap {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            /* Ensures the SVG is behind the form */
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg-wrap">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stop-color="#008080"></stop>
+                    <stop offset="100%" stop-color="rgba(173, 216, 230, 0)"></stop>
+                </radialGradient>
+                <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stop-color="#FF6F61"></stop>
+                    <stop offset="100%" stop-color="rgba(255, 218, 185, 0)"></stop>
+                </radialGradient>
+                <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+                    <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+                    <stop offset="0%" stop-color="#FFFFF0"></stop>
+                    <stop offset="100%" stop-color="rgba(240, 248, 255, 0)"></stop>
+                </radialGradient>
+            </defs>
+            <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)"
+                transform="rotate(334.41 50 50)">
+                <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
+                <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+                <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s"
+                    repeatCount="indefinite"></animateTransform>
+            </rect>
+            <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)"
+                transform="rotate(255.072 50 50)">
+                <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
+                <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
+                <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s"
+                    repeatCount="indefinite"></animateTransform>
+            </rect>
+            <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)"
+                transform="rotate(139.903 50 50)">
+                <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+                <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+                <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s"
+                    repeatCount="indefinite"></animateTransform>
+            </rect>
+        </svg>
+    </div>
+    <div class="form-container">
+        <div id="form-section-1" class="form-section visible">
+            <h2>ENTER YOUR NAME:</h2>
+            <input type="text" id="name" placeholder="Your Name" required>
+            <button onclick="nextSection(1)">Next</button>
+        </div>
+
+        <div id="form-section-2" class="form-section">
+            <h2>ENTER YOUR AGE:</h2>
+            <input type="number" id="age" placeholder="Your Age" required minvalue="1" maxlength="3">
+            <button onclick="previousSection(2)">Previous</button>
+            <button onclick="nextSection(2)">Next</button>
+        </div>
+
+        <div id="form-section-3" class="form-section">
+            <h2>ENTER YOUR WEIGHT:</h2>
+            <input type="number" id="weight" placeholder="Your Weight" required minlength="1" maxlength="3">
+            <button onclick="previousSection(3)">Previous</button>
+            <button onclick="nextSection(3)">Next</button>
+        </div>
+
+        <div id="form-section-4" class="form-section">
+            <h2>ENTER YOUR HEIGHT:</h2>
+            <input type="number" id="height" placeholder="Your Height" required minlength="1" maxlength="3">
+            <button onclick="previousSection(4)">Previous</button>
+            <button onclick="nextSection(4)">Next</button>
+        </div>
+
+        <div id="form-section-5" class="form-section">
+            <h2>ENTER YOUR ADDRESS:</h2>
+            <input type="text" id="address" placeholder="Your Address" required>
+            <button onclick="previousSection(5)">Previous</button>
+            <button onclick="nextSection(5)">Next</button>
+        </div>
+
+        <div id="form-section-6" class="form-section">
+            <h2>ENTER YOUR MOBILE NUMBER:</h2>
+            <input type="tel" id="mobile" placeholder="Your Mobile Number" required>
+            <button onclick="previousSection(6)">Previous</button>
+            <button onclick="nextSection(6)">Next</button>
+        </div>
+
+        <div id="form-section-7" class="form-section">
+            <h2>ENTER YOUR EMAIL ID:</h2>
+            <input type="email" id="email" placeholder="Your Email ID"  required>
+            <button onclick="previousSection(7)">Previous</button>
+            <button onclick="showResults()">Submit</button>
+        </div>
+
+        <div id="result">
+            <h2>Individual Information:</h2>
+            <p id="result-name"></p>
+            <p id="result-age"></p>
+            <p id="result-weight"></p>
+            <p id="result-height"></p>
+            <p id="result-address"></p>
+            <p id="result-mobile"></p>
+            <p id="result-email"></p>
+        </div>
+
+        <script>
+            let currentSection = 1;
+
+            function nextSection(section) {
+                if (validateForm()) {
+                    document.getElementById(`form-section-${currentSection}`).classList.remove('visible');
+                    currentSection = section + 1;
+                    document.getElementById(`form-section-${currentSection}`).classList.add('visible');
+                    document.getElementById('result').classList.remove('visible');
+                }
+            }
+        
+            function previousSection(section) {
+                document.getElementById(`form-section-${currentSection}`).classList.remove('visible');
+                currentSection = section - 1;
+                document.getElementById(`form-section-${currentSection}`).classList.add('visible');
+                document.getElementById('result').classList.remove('visible');
+            }
+        
+            function validateForm() {
+                switch (currentSection) {
+                    case 1:
+                        return validateName();
+                    case 2:
+                        return validateAge();
+                    case 3:
+                        return validateWeight();
+                    case 4:
+                        return validateHeight();
+                    case 5:
+                        return validateAddress();
+                    case 6:
+                        return validateMobile();
+                    case 7:
+                        return validateEmail();
+                    default:
+                        return true;
+                }
+            }
+        
+            function validateName() {
+                const nameInput = document.getElementById('name');
+                const name = nameInput.value.trim();
+            
+                if (!name || !/^[a-zA-Z]+$/.test(name)) {
+                    alert('Please enter a valid name with only alphabets.');
+                    return false;
+                }
+            
+                return true;
+            }
+            
+        
+            function validateAge() {
+                const ageInput = document.getElementById('age');
+                const age = ageInput.value.trim();
+                if (!age || isNaN(age)) {
+                    alert('Please enter a valid age.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function validateWeight() {
+                const weightInput = document.getElementById('weight');
+                const weight = weightInput.value.trim();
+                if (!weight || isNaN(weight)) {
+                    alert('Please enter a valid weight.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function validateHeight() {
+                const heightInput = document.getElementById('height');
+                const height = heightInput.value.trim();
+                if (!height || isNaN(height)) {
+                    alert('Please enter a valid height.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function validateAddress() {
+                const addressInput = document.getElementById('address');
+                const address = addressInput.value.trim();
+                if (!address) {
+                    alert('Please enter your address.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function validateMobile() {
+                const mobileInput = document.getElementById('mobile');
+                const mobile = mobileInput.value.trim();
+                if (!mobile || !/^\d{10}$/.test(mobile)) {
+                    alert('Please enter a valid 10-digit mobile number.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function validateEmail() {
+                const emailInput = document.getElementById('email');
+                const email = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return false;
+                }
+                return true;
+            }
+        
+            function showResults() {
+                if (validateForm()) {
+                    const name = document.getElementById('name').value;
+                    const age = document.getElementById('age').value;
+                    const weight = document.getElementById('weight').value;
+                    const height = document.getElementById('height').value;
+                    const address = document.getElementById('address').value;
+                    const mobile = document.getElementById('mobile').value;
+                    const email = document.getElementById('email').value;
+        
+                    // Store form data in localStorage
+                    localStorage.setItem('name', name);
+                    localStorage.setItem('age', age);
+                    localStorage.setItem('weight', weight);
+                    localStorage.setItem('height', height);
+                    localStorage.setItem('address', address);
+                    localStorage.setItem('mobile', mobile);
+                    localStorage.setItem('email', email);
+        
+                    window.location.href = 'home.html';                    
+                }
+            }
+        </script>
+        
+    </div>
+</body>
+
+</html>

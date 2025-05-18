@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="./images/Fitness-PNG-Images.png" type="image/x-icon">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the reference to the historyList element from the opener window
+            var historyList = window.opener.document.getElementById("historyList");
+
+            // Initialize an empty array to store the sum of calories
+            var sumCalorieDataPoints = [];
+
+            // Initialize a Chart.js line chart for calories
+            var ctx = document.getElementById('lineChart').getContext('2d');
+            var calorieChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Total Calories',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: sumCalorieDataPoints,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left'
+                        }
+                    }
+                }
+            });
+
+            function refreshPage() {
+                // Get the content of historyList
+                var historyContent = historyList.textContent;
+
+                // Extract calories by searching for the keyword "Calories"
+                var calories = historyContent.match(/Calories: (\d+)/g);
+
+                // Sum the extracted calories
+                var totalCalories = 0;
+                if (calories) {
+                    calories.forEach(function (calorie) {
+                        totalCalories += parseInt(calorie.match(/\d+/)[0], 10);
+                    });
+                }
+
+                // Update the array of sum data points for calories
+                sumCalorieDataPoints.push(totalCalories);
+
+                // Limit the number of data points for better visualization
+                if (sumCalorieDataPoints.length > 10) {
+                    sumCalorieDataPoints.shift();
+                }
+
+                // Update the chart data and labels for calories
+                calorieChart.data.labels = Array.from({ length: sumCalorieDataPoints.length }, (_, i) => i + 1);
+                calorieChart.data.datasets[0].data = sumCalorieDataPoints;
+
+                // Update the chart for calories
+                calorieChart.update();
+
+                // Display the sum of calories in the displayHistory div
+                document.getElementById("displayHistory").textContent = "Total Calories: " + totalCalories;
+            }
+
+            // Refresh the page every 5 seconds (5000 milliseconds)
+            setInterval(refreshPage, 5000);
+        });
+    </script>
+    <style>
+        .calorieChartContainer {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="displayHistory">
+        <!-- The extracted sum of calories will be displayed here -->
+    </div>
+    <div class="calorieChartContainer">
+        <canvas id="lineChart" width="400" height="200"></canvas>
+    </div>
+</body>
+</html>
